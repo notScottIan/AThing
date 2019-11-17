@@ -1,4 +1,9 @@
-﻿using System;
+﻿// AThing
+
+// Bld  Ver    Date      Notes
+//             17/11/19  Started
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
