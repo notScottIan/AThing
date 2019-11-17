@@ -16,5 +16,34 @@ namespace AThing
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DisplayBallonTip();
+        }
+
+        private void notifyIcon1_BalloonTipClosed(object sender, EventArgs e)
+        {
+            //notifyIcon1.Dispose();
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            DisplayBallonTip();
+        }
+
+        private void DisplayBallonTip()
+        {
+            notifyIcon1.BalloonTipText = "New files were detected";
+            notifyIcon1.BalloonTipTitle = "AThing";
+            notifyIcon1.Icon = SystemIcons.Application;
+            notifyIcon1.Visible = true;
+            notifyIcon1.ShowBalloonTip(50000);
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            notifyIcon1.Visible = false;
+        }
     }
 }
