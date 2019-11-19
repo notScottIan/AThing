@@ -45,5 +45,16 @@ namespace AThing
         {
             notifyIcon1.Visible = false;
         }
+
+        private void button2_Click(object sender, EventArgs e) {
+
+            Engine scheduler = new Engine();
+            scheduler.Settings = new Entry(@"C:\", "Doc");
+            scheduler.UpdateCount();
+            MessageBox.Show("Directory " + scheduler.Settings.MonitoredDirectory + " has " + scheduler.Settings.CurrentCount + " files of type " + scheduler.Settings.MonitoredFileType);
+            
+        
+        }
     }
 }
+;
