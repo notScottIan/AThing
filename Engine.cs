@@ -8,10 +8,6 @@ namespace AThing
 {
     class Engine
     {
-        public Entry Settings { get; set; }
-
-        public void UpdateCount() {
-            Settings.CurrentCount = 5;            
-        }
+        public Entry Settings { get; set; }        
     }
 }
