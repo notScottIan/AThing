@@ -11,15 +11,16 @@ namespace AThing
     {        
         public string MonitoredDirectory { get; set; }
         public string MonitoredFileType { get; set; }
-        public int CurrentCount {
-            get {
-                return Directory.GetFiles(MonitoredDirectory, MonitoredFileType).Length;
-            }
-        }
+        public int FileCount { get; set; }
 
         public Entry(string monitoredDirectory, string monitoredFileType) {
             MonitoredDirectory = monitoredDirectory;
             MonitoredFileType = monitoredFileType;
+            FileCount = 0;
+        }
+
+        public int CountFiles() {
+            return Directory.GetFiles(MonitoredDirectory, MonitoredFileType).Length;
         }
     }
 }
