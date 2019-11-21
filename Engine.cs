@@ -8,6 +8,10 @@ namespace AThing
 {
     class Engine
     {
-        public Entry Settings { get; set; }        
+        public List<Entry> Settings { get; set; } 
+        
+        public Engine() {
+            Settings = new List<Entry>();
+        }
     }
 }
