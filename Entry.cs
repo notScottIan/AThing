@@ -20,7 +20,12 @@ namespace AThing
         }
 
         public int CountFiles() {
-            return Directory.GetFiles(MonitoredDirectory, MonitoredFileType).Length;
+
+            int returnValue = 0;
+            if (Directory.Exists(MonitoredDirectory)) {
+                returnValue = Directory.GetFiles(MonitoredDirectory, MonitoredFileType).Length;
+            }
+            return returnValue;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AThing
 {
@@ -23,7 +24,11 @@ namespace AThing
             
             foreach (string registryValue in Registry.CurrentUser.OpenSubKey(registryKey).GetValueNames()) {
                 string registryData = Registry.GetValue("HKEY_CURRENT_USER\\" + registryKey, registryValue, "").ToString();
-                Settings.Add(new Entry(registryData.Split('|')[0], registryData.Split('|')[1]));
+                string addDirectory = registryData.Split('|')[0];
+                string addType = registryData.Split('|')[1];
+                if (Directory.Exists(addDirectory)) {
+                    Settings.Add(new Entry(addDirectory, addType));
+                }                
             }            
         }
     }
