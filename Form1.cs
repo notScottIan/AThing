@@ -49,9 +49,7 @@ namespace AThing
         private void button2_Click(object sender, EventArgs e) {
 
             Engine scheduler = new Engine();
-            scheduler.Settings.Add(new Entry(@"C:\Stuff", "*.txt"));
-            scheduler.Settings.Add(new Entry(@"C:\Stuff", "*.doc"));
-            scheduler.Settings.Add(new Entry(@"C:\Stuff", "*.bat"));
+            
 
             for (int i = 0; i < scheduler.Settings.Count; i++) {
                 scheduler.Settings[i].FileCount = scheduler.Settings[i].CountFiles();
