@@ -7,25 +7,37 @@ using System.IO;
 
 namespace AThing
 {
-    class Entry
+    internal class Entry
     {        
-        public string MonitoredDirectory { get; set; }
-        public string MonitoredFileType { get; set; }
-        public int FileCount { get; set; }
+        internal string MonitoredDirectory { get; set; }
+        internal string MonitoredFileType { get; set; }
+        internal int FileCount { get; set; }
 
-        public Entry(string monitoredDirectory, string monitoredFileType) {
+        internal Entry(string monitoredDirectory, string monitoredFileType) {
             MonitoredDirectory = monitoredDirectory;
             MonitoredFileType = monitoredFileType;
-            FileCount = 0;
+            FileCount = CountFiles();
         }
 
-        public int CountFiles() {
+        internal int CountFiles() {
 
             int returnValue = 0;
             if (Directory.Exists(MonitoredDirectory)) {
                 returnValue = Directory.GetFiles(MonitoredDirectory, MonitoredFileType).Length;
             }
             return returnValue;
+
+        }
+
+        internal bool UpdateCount() {
+
+            bool countChanged = false;
+            int newCount = CountFiles();
+            if (FileCount != newCount) {
+                FileCount = newCount;
+                countChanged = true;
+            }
+            return countChanged;
         }
     }
 }
