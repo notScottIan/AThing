@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AThing
@@ -14,74 +8,101 @@ namespace AThing
     {
         private Engine scheduler;
 
-        public Form1()
-        {
+        public Form1() {
+
             InitializeComponent();
             scheduler = new Engine();
 
-            //for (int i = 0; i < scheduler.Settings.Count; i++) {
-            //    scheduler.Settings[i].FileCount = scheduler.Settings[i].CountFiles();
-            //    string message = "Directory " + scheduler.Settings[i].MonitoredDirectory;
-            //    message += " has " + scheduler.Settings[i].FileCount + " files of type ";
-            //    message += scheduler.Settings[i].MonitoredFileType;
-            //    //MessageBox.Show(message);
-            //}
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //DisplayBallonTip();
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e) {
+
+            DisplayMainForm();
+
         }
 
-        private void notifyIcon1_BalloonTipClosed(object sender, EventArgs e)
-        {
-            notifyIcon1.Dispose();
+        private void notifyIcon1_Click(object sender, EventArgs e) {
+
+            DisplayMainForm();
+
         }
 
-        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
-        {
-            //DisplayBallonTip();
-            //notifyIcon1.
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e) {
+            
+            DisplayMainForm();
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e) {
+
+            for (int i = 0; i < scheduler.Settings.Count; i++) {
+
+                int countChange = scheduler.Settings[i].UpdateCount();
+                if (countChange != 0) {
+                    string message = "[" + DateTime.Now.ToString("HH:mm:ss") + "]";
+                    message += " Directory " + scheduler.Settings[i].MonitoredDirectory;
+                    message += " file count changed (" + countChange.ToString("+#;-#;0") + ") for files of type ";
+                    message += scheduler.Settings[i].MonitoredFileType;
+                    DisplayBallonTip(message, "AThing");
+                    txtEvents.AppendText(message + Environment.NewLine);
+                }
+
+            }
         }
 
         private void DisplayBallonTip(string theText, string theTitle) {
             
             notifyIcon1.BalloonTipText = theText;
             notifyIcon1.BalloonTipTitle = theTitle;
-            notifyIcon1.Icon = SystemIcons.Application;
+            notifyIcon1.Icon = SystemIcons.WinLogo;
             notifyIcon1.Visible = true;
-            notifyIcon1.ShowBalloonTip(50000);
+            notifyIcon1.ShowBalloonTip(50000);            
 
         }
 
-        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
-        {
-            //notifyIcon1.Visible = !notifyIcon1.Visible;
+        private void DisplayMainForm() {
+
+            WindowState = FormWindowState.Normal;
+            Activate();
+            notifyIcon1.Visible = false;
+
         }
 
-        private void button2_Click(object sender, EventArgs e) {
+        private void btnClear_Click(object sender, EventArgs e) {
 
-            
-            
+            txtEvents.Text = null;
+
         }
 
-        private void timer1_Tick(object sender, EventArgs e) {
+        private void btnConfig_Click(object sender, EventArgs e) {
 
-            for (int i = 0; i < scheduler.Settings.Count; i++) {
-                //int currentCount = scheduler.Settings[i].FileCount;
-                //int newCount = scheduler.Settings[i].CountFiles();
-                //scheduler.Settings[i].FileCount = newCount;
+            foreach (Entry p in scheduler.Settings) {
+                txtEvents.AppendText(GetTime() + " " + p.MonitoredFileType + "\t" + p.MonitoredDirectory + Environment.NewLine);
+            }            
 
-                if (scheduler.Settings[i].UpdateCount()) {
-                    string message = "Directory " + scheduler.Settings[i].MonitoredDirectory;
-                    message += " file count changed for files of type ";
-                    message += scheduler.Settings[i].MonitoredFileType;
-                    //MessageBox.Show(message);
-                    DisplayBallonTip(message, "AThing");
-                }
-            
+        }
+
+        private void btnControl_Click(object sender, EventArgs e) {
+
+            txtEvents.AppendText(GetTime());
+            if (btnControl.Text == "Stop") {
+                timer1.Enabled = false;
+                btnControl.Text = "Start";
+                txtEvents.AppendText(" Stopping");
             }
+            else {
+                timer1.Enabled = true;
+                btnControl.Text = "Stop";
+                txtEvents.AppendText(" Starting");
+            }
+            
+            txtEvents.AppendText(Environment.NewLine);
+        }
+
+        private string GetTime() {
+
+            return "[" + DateTime.Now.ToString("HH:mm:ss") + "]";
+
         }
     }
 }
-;

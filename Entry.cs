@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace AThing
@@ -14,9 +10,11 @@ namespace AThing
         internal int FileCount { get; set; }
 
         internal Entry(string monitoredDirectory, string monitoredFileType) {
+
             MonitoredDirectory = monitoredDirectory;
             MonitoredFileType = monitoredFileType;
             FileCount = CountFiles();
+
         }
 
         internal int CountFiles() {
@@ -29,15 +27,13 @@ namespace AThing
 
         }
 
-        internal bool UpdateCount() {
-
-            bool countChanged = false;
+        internal int UpdateCount() {
+            
             int newCount = CountFiles();
-            if (FileCount != newCount) {
-                FileCount = newCount;
-                countChanged = true;
-            }
+            int countChanged = newCount - FileCount;
+            FileCount = newCount;                
             return countChanged;
+
         }
     }
 }
