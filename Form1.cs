@@ -54,7 +54,7 @@ namespace AThing
             
             notifyIcon1.BalloonTipText = theText;
             notifyIcon1.BalloonTipTitle = theTitle;
-            notifyIcon1.Icon = SystemIcons.WinLogo;
+            //notifyIcon1.Icon = SystemIcons.WinLogo;
             notifyIcon1.Visible = true;
             notifyIcon1.ShowBalloonTip(50000);            
 
